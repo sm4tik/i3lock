@@ -45,6 +45,9 @@ extern uint32_t last_resolution[2];
 /* Whether the unlock indicator is enabled (defaults to true). */
 extern bool unlock_indicator;
 
+/* Whether to always show the unlock indicator (defaults to false). */
+extern bool always_show;
+
 /* List of pressed modifiers, or NULL if none are pressed. */
 extern char *modifier_string;
 
@@ -141,7 +144,7 @@ xcb_pixmap_t draw_image(uint32_t *resolution) {
     }
 
     if (unlock_indicator &&
-        (unlock_state >= STATE_KEY_PRESSED || pam_state > STATE_PAM_IDLE)) {
+        (unlock_state >= STATE_KEY_PRESSED || pam_state > STATE_PAM_IDLE || always_show)) {
         cairo_scale(ctx, scaling_factor(), scaling_factor());
         /* Draw a (centered) circle with transparent background. */
         cairo_set_line_width(ctx, 10.0);
